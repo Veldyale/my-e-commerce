@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 User = get_user_model()
 
@@ -45,14 +46,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Цена")
 
 
-    # class Meta:
-    #     ordering = ('name',)
-    #     verbose_name = 'продукт'
-    #     verbose_name_plural = 'продукты'
-
-
-    # def get_url(self):
-    #     return reverse('products_by_category', args=[self.slug])
+    class Meta:
+        abstract =True
 
 
     def __str__(self):
@@ -63,7 +58,9 @@ class CartProduct(models.Model):
 
     user = models.ForeignKey('Customer', verbose_name='Покупатель', on_delete=models.CASCADE)
     cart = models.ForeignKey('Cart',verbose_name='Корзина', on_delete=models.CASCADE, related_name='related_products')
-    product = models.ForeignKey(Product,verbose_name='Товар', on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
     qty = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая стоимость")
 
@@ -89,11 +86,11 @@ class Customer(models.Model):
     def __str__(self):
         return (f'Покупатель: {self.user.first_name} {self.user.last_name}')
 
-class Specifications(models.Model):
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    name = models.CharField(max_length=255, verbose_name='Наименование товара для хараетеристик')
-
-    def __str__(self):
-        return (f'Характеристики товара: {self.name}')
+# class Specifications(models.Model):
+#
+#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+#     object_id = models.PositiveIntegerField()
+#     name = models.CharField(max_length=255, verbose_name='Наименование товара для хараетеристик')
+#
+#     def __str__(self):
+#         return (f'Характеристики товара: {self.name}')
