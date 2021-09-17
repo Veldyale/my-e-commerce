@@ -1,0 +1,39 @@
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner mx-auto">
+    {% if product.image.url %}
+    <div class="carousel-item active">
+      <a href="#"><img class="card-img-top p-3 " src="{{product.image.url}}" alt=""></a>
+    </div>
+    {% endif %}
+    {% if product_1.image_1.url %}
+    <div class="carousel-item">
+      <a href="#"><img class="card-img-top p-3 " src="{{product.image_1.url}}" alt=""></a>
+    </div>
+    {% endif %}
+    {% if product_2.image_2.url %}
+    <div class="carousel-item">
+      <a href="#"><img class="card-img-top p-3 " src="{{product.image_2.url}}" alt=""></a>
+    </div>
+    {% endif %}
+    {% if product_3.image_3.url %}
+    <div class="carousel-item">
+      <a href="#"><img class="card-img-top p-3 " src="{{product.image_3.url}}" alt=""></a>
+    </div>
+    {% endif %}
+    {% if product_4.image_4.url %}
+    <div class="carousel-item">
+      <a href="#"><img class="card-img-top p-3 " src="{{product.image_4.url}}" alt=""></a>
+    </div>
+    {% endif %}
+<!--    <div>-->
+<!--      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
+<!--      <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--      <span class="sr-only">Previous</span>-->
+<!--      </a>-->
+<!--      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
+<!--      <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--      <span class="sr-only">Next</span>-->
+<!--      </a>-->
+<!--    </div>-->
+  </div>
+</div>

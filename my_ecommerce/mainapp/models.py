@@ -6,6 +6,22 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 User = get_user_model()
 
 
+class LatesProductsManager:
+
+    @staticmethod
+    def get_products_for_main_page(*args, **kwargs):
+        products = []
+        ct_models = ContentType.objects.filter(model_in=args)
+        for ct_model in ct_models:
+            model_products = ct_model.model_class()._base_manager.all().oder_by('id')[:5]
+            products.extend(model_products)
+        return products
+
+
+class LatesProducts:
+
+    objects = LatesProductsManager()
+
 class Category(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Категория', blank=False)

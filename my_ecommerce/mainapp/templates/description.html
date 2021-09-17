@@ -1,0 +1,55 @@
+
+              <!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link href="/examples/libs/bootstrap-4/css/bootstrap.min.css" rel="stylesheet">
+  <title>Bootstrap 4 - Tabs</title>
+  <style>
+    body {
+      padding: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<br>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-uppercase text-dark active" data-toggle="tab" href="#description">Подробнее</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-uppercase text-dark" data-toggle="tab" href="#characteristics">Способ применения</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-uppercase text-dark" data-toggle="tab" href="#opinion">Состав</a>
+      </li>
+    </ul>
+    <div class="tab-content p-3">
+      <div class="tab-pane fade show active" id="description">
+        <h2 class="h4 mb-3">Описание товара:</h2>
+        <p class="text-left">{{product.description}}</p>
+      </div>
+      <div class="tab-pane fade" id="characteristics">
+        <h2 class="h4 mb-3">Способ применения:</h2>
+        <p class="text-left">{{product.mode_of_application}}</p>
+      </div>
+      <div class="tab-pane fade" id="opinion">
+        <h2 class="h4 mb-3">Состав:</h2>
+        <p class="text-left">{{product.composition}}</p>
+      </div>
+    </div>
+
+  <!-- jQuery -->
+  <script src="/examples/libs/jquery/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="/examples/libs/bootstrap-4/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+						

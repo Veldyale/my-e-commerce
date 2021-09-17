@@ -1,0 +1,10 @@
+
+<footer class="bg-dark text-white mt-5 top-100"  style="width: 100%; height: 70px;position: fixed; left: 0; right: 0; bottom: 0; opacity: 0.85 !important;">
+    <div class="container-fluid mt-3">
+{% if item_count > 0 %}
+        <a href="{% url 'cart_detail' %}" class="navbar-brand nav-link text-light font-weight-bold"><i class="md-36 material-icons cart-icon text-light" style="vertical-align: middle;">shopping_cart</i><span class="badge badge-pill badge-danger mr-1">{{item_count}}</span> ИТОГО: {{total}} ₽ </a>
+{% else %}
+        <p class="text-light font-weight-bold text-center pt-2 text-uppercase">Приятных покупок</p>
+{% endif %}
+    </div>
+</footer>
