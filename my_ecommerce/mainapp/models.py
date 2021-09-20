@@ -6,27 +6,32 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 User = get_user_model()
 
 
-class LatesProductsManager:
+class LatestProductsManager:
 
     @staticmethod
     def get_products_for_main_page(*args, **kwargs):
+        with_respect_to = kwargs.get('with_respect_to')
         products = []
-        ct_models = ContentType.objects.filter(model_in=args)
+        ct_models = ContentType.objects.filter(model__in=args)
         for ct_model in ct_models:
-            model_products = ct_model.model_class()._base_manager.all().oder_by('id')[:5]
+            model_products = ct_model.model_class()._base_manager.all().order_by('id')[:5]
             products.extend(model_products)
+        if with_respect_to:
+            ct_model = ContentType.objects.filter(model=with_respect_to)
+            if ct_model.exists():
+                if with_respect_to in args:
+                    return sorted(products, key=lambda x: x.__class__._meta.model_name.startswith(with_respect_to), reverse=True)
         return products
 
 
-class LatesProducts:
+class LatestProducts:
 
-    objects = LatesProductsManager()
+    objects = LatestProductsManager()
 
 class Category(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Категория', blank=False)
     slug = models.SlugField(unique=True, blank=False)
-
 
     # class Meta:
     #     ordering = ('name',)
@@ -44,16 +49,15 @@ class Category(models.Model):
 
 class Product(models.Model):
 
+    class Meta:
+        abstract =True
+
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.CASCADE)
     title = models.CharField(max_length=255, verbose_name='Наименование', unique=True, blank=False)
     slug = models.SlugField(unique=True, blank=False)
     image = models.ImageField(upload_to='product', blank=False, verbose_name="Изображение")
     description = models.TextField(blank=True, default='Мы работаем над этим', verbose_name="Описание")
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Цена")
-
-
-    class Meta:
-        abstract =True
 
 
     def __str__(self):
