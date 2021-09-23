@@ -1,9 +1,13 @@
+import sys
 from PIL import Image
 
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+from io import BytesIO
 
 User = get_user_model()
 
@@ -59,7 +63,7 @@ class Category(models.Model):
 class Product(models.Model):
 
     MIN_RESOLUTION = (400, 400)
-    MAX_RESOLUTION = (1200, 1200)
+    MAX_RESOLUTION = (800, 800)
 
     class Meta:
         abstract =True
@@ -77,14 +81,28 @@ class Product(models.Model):
 
 
     def save(self, *args, **kwargs):
+        # image = self.image
+        # img = Image.open(image)
+        # min_height, min_width = Product.MIN_RESOLUTION
+        # max_height, max_width = Product.MAX_RESOLUTION
+        # if img.width > max_width or img.height > max_height:
+        #     raise MaxResolutionErrorException('Разрешение изображения больше максимального')
+        # if img.width < min_width or img.height < min_height:
+        #     raise MinResolutionErrorException('Разрешение изображения меньше минимального')
         image = self.image
         img = Image.open(image)
-        min_height, min_width = Product.MIN_RESOLUTION
-        max_height, max_width = Product.MAX_RESOLUTION
-        if img.width > max_width or img.height > max_height:
-            raise MaxResolutionErrorException('Разрешение изображения больше максимального')
-        if img.width < min_width or img.height < min_height:
-            raise MinResolutionErrorException('Разрешение изображения меньше минимального')
+        new_img = img.convert('RGB')
+        resized_new_image = new_img.resize((800, 800), Image.ANTIALIAS)
+        filestream = BytesIO()
+        resized_new_image.save(filestream, "JPEG", quality=90)
+        filestream.seek(0)
+        name = '{}.{}'.format(*self.image.name.split('.'))
+        self.image = InMemoryUploadedFile(
+            filestream, 'ImageField',
+            name, 'jpeg/image',
+            sys.getsizeof(filestream),
+            None
+        )
         super().save(*args, **kwargs)
 
 class Notebook(Product):

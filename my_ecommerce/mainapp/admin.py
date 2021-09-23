@@ -10,21 +10,21 @@ class NotebookAdminForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['image'].help_text = mark_safe('<span style="color: red; font-size: 14px;">Минимальное разрешение изображениея {}px * {}px </span>'.format(*Product.MIN_RESOLUTION))
+        self.fields['image'].help_text = mark_safe("""<span style="color: red; font-size: 14px;">Разрешение изображения будет изменено до {}px * {}px</span>""".format(*Product.MAX_RESOLUTION))
 
 
-    def clean_image(self):
-        image = self.cleaned_data['image']
-        img = Image.open(image)
-        min_height, min_width = Product.MIN_RESOLUTION
-        max_height, max_width = Product.MAX_RESOLUTION
-        if img.width != img.height:
-            raise ValidationError('Изображение должно быть квадратным')
-        if img.width > max_width or img.height > max_height:
-            raise ValidationError('Разрешение изображения больше максимального')
-        if img.width < min_width or img.height < min_height:
-            raise ValidationError('Разрешение изображения меньше минимального')
-        return image
+    # def clean_image(self):
+    #     image = self.cleaned_data['image']
+    #     img = Image.open(image)
+    #     min_height, min_width = Product.MIN_RESOLUTION
+    #     max_height, max_width = Product.MAX_RESOLUTION
+    #     if img.width != img.height:
+    #         raise ValidationError('Изображение должно быть квадратным')
+    #     if img.width > max_width or img.height > max_height:
+    #         raise ValidationError('Разрешение изображения больше максимального')
+    #     if img.width < min_width or img.height < min_height:
+    #         raise ValidationError('Разрешение изображения меньше минимального')
+    #     return image
 
 User = get_user_model()
 
