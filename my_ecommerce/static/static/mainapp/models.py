@@ -86,6 +86,14 @@ class Product(models.Model):
 
 
     def save(self, *args, **kwargs):
+        # image = self.image
+        # img = Image.open(image)
+        # min_height, min_width = Product.MIN_RESOLUTION
+        # max_height, max_width = Product.MAX_RESOLUTION
+        # if img.width > max_width or img.height > max_height:
+        #     raise MaxResolutionErrorException('Разрешение изображения больше максимального')
+        # if img.width < min_width or img.height < min_height:
+        #     raise MinResolutionErrorException('Разрешение изображения меньше минимального')
         image = self.image
         img = Image.open(image)
         new_img = img.convert('RGB')

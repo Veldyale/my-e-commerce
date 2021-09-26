@@ -1,0 +1,52 @@
+<table class="table">
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td>Диагональ (дюйм):</td>
+      <td>{{product.diagonal}}</td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td>Разрешение экрана (пикс.):</td>
+      <td>{{product.resolution}}</td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td>Объем батареи:</td>
+      <td>{{product.accum_volume}}</td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td>Оперативная память:</td>
+      <td>{{product.ram}} GB</td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td>Поддержка карт памяти:</td>
+      <td>
+        {% if product.sd == True%}
+        Да
+        {% elif product.sd == False %}
+        Нет
+        {% endif %}
+      </td>
+    </tr>
+        {% if product.sd == True%}
+    <tr>
+      <th scope="row"></th>
+      <td>Максимальный объем встраиваемой памяти:</td>
+      <td>{{product.sd_volume_max}}</td>
+    </tr>
+        {% endif %}
+    <tr>
+      <th scope="row"></th>
+      <td>Основная камера:</td>
+      <td>{{product.main_cam_mp}} ч.</td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td>Фронтальная камера:</td>
+      <td>{{product.frontal_cam_mp}} ч.</td>
+    </tr>
+  </tbody>
+</table>
