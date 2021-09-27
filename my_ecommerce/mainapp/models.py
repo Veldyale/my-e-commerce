@@ -112,7 +112,7 @@ class Notebook(Product):
     time_without_charge = models.CharField(max_length=255, verbose_name='Время работы аккумулятора')
 
     def __str__(self):
-        return (f'{self.category.name} : {self.title}')
+        return "{} : {}".format(self.category.name, self.title)
 
     def get_absolute_url(self):
         return get_product_url(self, 'product_detail')
@@ -132,7 +132,7 @@ class Smartphone(Product):
 
 
     def __str__(self):
-        return (f'{self.category.name} : {self.title}')
+        return "{} : {}".format(self.category.name, self.title)
 
     def get_absolute_url(self):
         return get_product_url(self, 'product_detail')

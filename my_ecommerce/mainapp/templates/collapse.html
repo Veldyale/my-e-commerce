@@ -1,3 +1,4 @@
+{% load specifications %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,20 +45,12 @@
         Характеристики {{product.title}}:
       </a>
       </div>
-      <div id="collapseThree" class="collapse" data-parent="#accordion">
-        <div class="card-body">
-          {% if product.category.slug == 'notebooks' %}
-            {% include 'notebook_specification.html' %}
-          {% elif product.category.slug == 'smartphones' %}
-            {% include 'smartphone_specification.html' %}
-          {% else %}
-            ...
-          {% endif %}
+        <div id="collapseThree" class="collapse" data-parent="#accordion">
+            {{ product|product_spec }}
         </div>
       </div>
     </div>
   </div>
 </div>
-
 </body>
 </html>
