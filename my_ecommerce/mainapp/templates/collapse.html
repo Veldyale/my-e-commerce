@@ -12,8 +12,15 @@
 <body>
 
 <div class="container mb-5">
-  <h2 class="mb-4">{{product.title}}</h2>
-  <h5 class="mb-4"> Цена: {{product.price}} ₽</h5>
+  <h2 class="mb-3">{{product.title}}</h2>
+  <h5 class="mb-3"> Цена: {{product.price}} ₽</h5>
+  <div class="row justify-content-md-left mb-3 ml-1">
+    <input class="form-control text-center me-3 mr-2" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+        <i class="bi-cart-fill me-1"></i>
+        Add to cart
+    </button>
+  </div>
   <div id="accordion">
     <div class="card mb-2">
       <div class="card-header bg-secondary">
