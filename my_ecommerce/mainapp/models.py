@@ -74,7 +74,7 @@ class Category(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Категория', blank=False)
     slug = models.SlugField(unique=True, blank=False)
-    object = CategoryManager()
+    objects = CategoryManager()
 
 
     def __str__(self):
