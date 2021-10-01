@@ -58,8 +58,6 @@ def product_spec(product):
     if isinstance(product, Smartphone):
         if not product.sd:
             PRODUCT_SPEC['smartphone'].pop('Максимальный объем карты памяти:')
-            # PRODUCT_SPEC['smartphone']['Поддержка карт памяти:'] = '1'
         else:
-            # PRODUCT_SPEC['smartphone']['Поддержка карт памяти:'] = '2'
             PRODUCT_SPEC['smartphone']['Максимальный объем карты памяти:'] = 'sd_volume_max'
     return mark_safe(TABLE_HEAD + get_product_spec(product, model_name) + TABLE_TAIL)
