@@ -174,7 +174,7 @@ class CartProduct(models.Model):
     total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая стоимость")
 
     def __str__(self):
-        return (f'Продукт: {self.product.title} (для корзины)')
+        return (f'Продукт: {self.content_object.title} (для корзины)')
 
 class Cart(models.Model):
 

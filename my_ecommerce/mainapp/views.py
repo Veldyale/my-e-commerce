@@ -51,6 +51,6 @@ class CartView(View):
         categoties = Category.objects.get_categories_for_left_sidebar()
         context = {
             'cart': cart,
-            'categories': categories
+            'categories': categoties
         }
         return render(request, 'cart.html', context)
