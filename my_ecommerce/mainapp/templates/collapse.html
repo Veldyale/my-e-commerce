@@ -16,10 +16,10 @@
   <h5 class="mb-3"> Цена: {{product.price}} ₽</h5>
   <div class="row justify-content-md-left mb-3 ml-1">
     <input class="form-control text-center me-3 mr-2" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+    <a href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}" class="btn btn-outline-dark flex-shrink-0" type="button">
         <i class="bi-cart-fill me-1"></i>
-        Add to cart
-    </button>
+        Добавить в корзину
+    </a>
   </div>
   <div id="accordion">
     <div class="card mb-2">

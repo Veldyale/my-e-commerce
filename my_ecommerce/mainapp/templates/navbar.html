@@ -23,7 +23,7 @@
                 <a href="{% url 'cart' %}" class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                         Корзина
-                    <span class="badge bg-danger text-white ms-1 rounded-pill">10</span>
+                    <span class="badge bg-danger text-white ms-1 rounded-pill">{{ cart.products.count }}</span>
                 </a>
             </form>
         </div>
