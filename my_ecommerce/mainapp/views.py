@@ -10,14 +10,12 @@ from .mixins import CategoryDetailMixin, CartMixin
 class BaseView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.get_catergories_for_left_sidebar()
-        products = LatestProducts.objects.get_products_for_main_page(
-            'notebook', 'smartphone', with_respect_to='notebook'
-        )
+        categoties = Category.objects.get_categories_for_left_sidebar()
+        products = LatestProducts.objects.get_products_for_main_page('notebook', 'smartphone', with_respect_to='notebook')
         context = {
-            'categories': categories,
+            'categories': categoties,
             'products': products,
-            'cart': self.cart
+            'cart': self.cart,
         }
         return render(request, 'base.html', context)
 
@@ -53,9 +51,9 @@ class CategoryDetailView(CartMixin, CategoryDetailMixin, DetailView):
     slug_url_kwarg = 'slug'
 
 
-class AddToCartView(CartMixin, View):
+class AddCartView(CartMixin, View):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *ars, **kwargs):
         ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')
         content_type = ContentType.objects.get(model=ct_model)
         product = content_type.model_class().objects.get(slug=product_slug)
@@ -64,16 +62,15 @@ class AddToCartView(CartMixin, View):
         )
         if created:
             self.cart.products.add(cart_product)
+        self.cart.save()
         return HttpResponseRedirect('/cart/')
-
-
 
 class CartView(CartMixin, View):
 
     def get(self, request, *ars, **kwargs):
-        categories = Category.objects.get_categories_for_left_sidebar()
+        categoties = Category.objects.get_categories_for_left_sidebar()
         context = {
             'cart': self.cart,
-            'categories': categories
+            'categories': categoties
         }
         return render(request, 'cart.html', context)

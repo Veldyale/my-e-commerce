@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block title %}
+    Cart
+{% endblock %}
 
+{% block content %}
+<br>
 <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h3>
 <table class="table">
   <thead>
@@ -15,14 +19,20 @@
   </thead>
   <tbody>
       {% for item in cart.products.all %}
-        <tr>
+        <tr class="">
           <th scope="row">{{ item.content_object.title }}</th>
-          <td class="w-25"><img src="{{ item.content_object.image.url }}" class="img-fluid"></td>
+          <td class="w-25"><img src="{{ item.content_object.image.url }}" class="img-fluid" style="height: 230px"></td>
           <td>{{ item.content_object.price }}</td>
           <td>{{ item.qty }}</td>
           <td>{{ item.total_price }} руб.</td>
         </tr>
       {% endfor %}
+        <tr>
+          <td colspan="2"></td>
+          <td>Итого:</td>
+          <td>{{ cart.total_products }}</td>
+          <td><strong>{{ cart.total_price }} руб.</strong></td>
+        </tr>
   </tbody>
 </table>
 

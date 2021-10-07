@@ -176,6 +176,10 @@ class CartProduct(models.Model):
     def __str__(self):
         return (f'Продукт: {self.content_object.title} (для корзины)')
 
+    def save(self, *args, **kwargs):
+        self.total_price = self.qty * self.content_object.price
+        super().save(*args, **kwargs)
+
 class Cart(models.Model):
 
     owner = models.ForeignKey('Customer', null=True, verbose_name='Владелец', on_delete=models.CASCADE)
@@ -186,17 +190,23 @@ class Cart(models.Model):
     for_anonymous_user = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Продукт: {} (для корзины)".format(self.content_object.price)
+        return str(self.id)
 
     def save(self, *args, **kwargs):
-        self.final_price = self.qty * self.content_objects.price
+        cart_data = self.products.aggregate(models.Sum('total_price'), models.Count('id'))
+        if cart_data.get('total_price__sum'):
+            self.total_price = cart_data['total_price__sum']
+        else:
+            self.total_price = 0
+        self.total_products = cart_data['id__count']
         super().save(*args, **kwargs)
+
 
 class Customer(models.Model):
 
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
-    phone = models.CharField(max_length=20, null=True, blank=True, verbose_name="Номер телефона")
-    address = models.CharField(max_length=255, null=True, blank=True, verbose_name="Адрес")
+    phone = models.CharField(max_length=20, verbose_name="Номер телефона", null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name="Адрес", null=True, blank=True)
 
     def __str__(self):
         return (f'Покупатель: {self.user.first_name} {self.user.last_name}')
